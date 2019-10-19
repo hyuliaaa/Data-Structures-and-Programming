@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include <stack>
+#include <sstream>
+
+int main()
+{
+    string input;
+    std::stack<string>st;
+    string words;
+
+    while(true)
+    {
+        getline(cin,input);
+        if(input=="end")
+        {
+            break;
+        }
+
+        istringstream istr(input);
+        while(istr>>words)
+        {
+            st.push(words);
+        }
+
+
+    }
+
+    while(!st.empty())
+    {
+        cout<<st.top()<<" ";
+        st.pop();
+    }
+
+
+
+
+
+
+
+
+    return 0;
+
+}
