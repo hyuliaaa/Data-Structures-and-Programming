@@ -49,3 +49,69 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+void showStack(stack<int>&st)
+{
+    while(!st.empty())
+    {
+        cout<<st.top()<<endl;
+        st.pop();
+    }
+}
+
+void deleteEvenElements(stack<int>&st, stack<int>&tmpSt)
+{
+    while(!st.empty())
+
+    {
+
+        if(st.top()%2==1)
+        {
+            tmpSt.push(st.top());
+        }
+        st.pop();
+
+    }
+    while(!tmpSt.empty())
+    {
+        st.push(tmpSt.top());
+        tmpSt.pop();
+
+    }
+}
+
+void inputStack(stack<int>& st, int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        int num;
+        cin>>num;
+        st.push(num);
+    }
+}
+
+
+int main()
+{
+    stack<int>st;
+    inputStack(st,5);
+    stack<int> tmpSt;
+    deleteEvenElements(st,tmpSt);
+    showStack(st);
+
+
+
+    return 0;
+}
+
