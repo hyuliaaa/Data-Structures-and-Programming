@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cmath>
+#include <list>
+
+using namespace std;
+
+void print(std::list <int>&l)
+{
+      for(list<int>::iterator it=l.begin(); it!=l.end(); it++)
+    {
+        cout<<*it<<" ";
+    }
+
+}
+
+list<int> reverseList (list<int> l)
+{
+    list <int> revList;
+    for(list<int>::iterator it=l.begin(); it!=l.end(); it++ )
+    {
+        revList.push_front(*it);
+    }
+
+    return revList;
+}
+
+/*void printFibonacci(list <int> l)
+{
+    list <int> fibIndexes={0,1,1,2};//generateFibIndexes l.size()
+    int x=0;
+    
+    for(list<int>::iterator it=l.begin(), it!=l.end(); advance(it,x))
+    {
+            x=fibIndexes
+    }
+}
+*/
+
+    int main()
+{
+
+    list <int>l;
+    l.push_front(5);
+    l.push_front(9);
+    l.push_front(7);
+
+    print(l);
+    cout<<endl;
+
+    list <int> ls=reverseList(l);
+    print(ls);
+
+
+
+
+    return 0;
+}
