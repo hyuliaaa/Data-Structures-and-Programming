@@ -1,0 +1,63 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+bool arePair(int a, int b)
+{
+    if (a=='(' && b==')')
+        return true;
+    else if(a=='{' && b=='}')
+        return true;
+    else if(a=='[' && a==']')
+        return true;
+    else if (a=='<' && a=='>')
+        return true;
+    return false;
+}
+
+bool areBalanced(std::string str)
+{
+    stack<char> st;
+    int len=str.size();
+
+    for(int i =0; i<len; i++)
+    {
+        if(str[i]=='(' || str[i]=='{' || str[i]=='[')
+        {
+            st.push(str[i]);
+        }
+        else if(str[i]==')' || str[i]=='}' || str[i]==']')
+        {
+            if (st.empty() || !arePair(st.top(),str[i]))
+                return false;
+            else
+                st.pop();
+        }
+
+
+    }
+    if(st.empty())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+int main()
+{
+    stack <char> s;
+    std::string str;
+    getline(cin,str);
+
+    cout<<areBalanced(str);
+
+
+
+
+    return 0;
+}
