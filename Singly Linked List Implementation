@@ -1,0 +1,322 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *next;
+};
+
+class LinkedList{
+private:
+    Node *first;
+
+
+public:
+    LinkedList(){first=nullptr;};
+    LinkedList(int A[], int n); //initialization of linked list
+    ~LinkedList();
+
+    void display();
+    void insertElement (int index, int x);
+    int deleteEl(int index);
+    int numberOfNodes();
+    int sumOfElements();
+    int maxElement();
+    bool isFound(int key);
+    Node* searchByMovingToFront(int key);
+    bool isSorted();
+    void reversingBySlidingPoiners();
+    void recursiveReverse();
+    bool isLoop();
+    Node* concatenatingLinkedLists(int A[], int B[]);
+
+
+};
+
+LinkedList::LinkedList(int A[], int n)
+{
+    Node *last;
+    Node *t;
+    first=new Node;
+    first->data=A[0];
+    first->next=nullptr;
+    last=first;
+
+    for(int i=1; i<n; i++)
+    {
+        t=new Node;
+        t->data=A[i];
+        t->next=nullptr;
+        last->next=t;
+        last=t;
+
+    }
+}
+LinkedList::~LinkedList()
+{
+    Node *p=first;
+    while(first)
+    {
+        first=first->next;
+        delete p;
+        p=first;
+    }
+}
+
+void LinkedList::display()
+{
+    Node *p=first;
+    while(p!=nullptr)
+    {
+        cout<<p->data<<" ";
+        p=p->next;
+    }
+    cout<<endl;
+}
+
+int LinkedList::numberOfNodes()
+{
+    int counter=0;
+    Node *p=first;
+    while(p!=nullptr)
+    {
+        counter++;
+        p=p->next;
+    }
+    return counter;
+}
+
+void LinkedList::insertElement(int index, int x)
+{
+
+    Node *t;
+    Node *p=first;
+    if(index<0 || index>numberOfNodes())
+        return;
+
+    t=new Node;
+    t->data=x;
+    t->next=nullptr;
+
+    if(index==0)
+    {
+        t->next=first;
+        first=t;
+    }
+    else
+    {
+        for(int i=0; i<index-1; i++)
+        {
+           p=p->next;
+           t->next=p->next;
+           p->next=t;
+        }
+    }
+
+}
+
+int LinkedList::deleteEl(int index)
+{
+    Node *p;
+    Node *q=nullptr;
+    int x=-1;
+
+    if(index<1 || index>numberOfNodes())
+        return -1;
+    if(index==1)
+    {
+        p=first;
+        first=first->next;
+        x=p->data;
+        delete p;
+    }
+    else
+    {
+        p=first;
+        for(int i=0; i<index-1; i++)
+        {
+            q=p;
+            p=p->next;
+        }
+        q->next=p->next;
+        x=p->data;
+        delete p;
+    }
+    return x;
+}
+
+int LinkedList::sumOfElements()
+{
+    int sum=0;
+    Node *p=first;
+    while(p!=nullptr)
+    {
+        sum+=p->data;
+        p=p->next;
+    }
+    return sum;
+}
+
+int LinkedList::maxElement()
+{
+    int maxEl=INT_MIN;
+    Node *p=first;
+
+    while(p!=nullptr)
+    {
+        if(p->data>maxEl)
+        {
+            maxEl=p->data;
+        }
+        p=p->next;
+    }
+    return maxEl;
+}
+
+bool LinkedList::isFound(int key)
+{
+    Node* p=first;
+
+    while(p!=nullptr)
+    {
+        if(p->data==key)
+        {
+            return true;
+        }
+        p=p->next;
+    }
+    return false;
+}
+
+Node * LinkedList::searchByMovingToFront(int key)
+{
+    Node *p=first;
+    Node *q=nullptr;
+
+    while(p!=nullptr)
+    {
+        if(key==p->data)
+        {
+            q->next=p->next;
+            p->next=first;
+            first=p;
+            return p;
+        }
+        q=p;
+        p=p->next;
+    }
+    return nullptr;
+}
+bool LinkedList::isSorted()
+{
+    Node *p=first;
+    int x=INT_MIN;
+
+    while(p!=nullptr)
+    {
+
+     if(p->data < x)
+     {
+         return false;
+     }
+     x=p->data;
+     p=p->next;
+
+
+
+    }
+    return true;
+}
+
+void LinkedList::reversingBySlidingPoiners()
+{
+    Node *p=first;
+    Node *q=nullptr;
+    Node *r=nullptr;
+
+    while(p!=nullptr)
+    {
+        r=q;
+        q=p;
+        p=p->next;
+        q->next=r;
+    }
+    first=q;
+}
+
+bool LinkedList::isLoop()
+{
+    Node *p=first;
+    Node *q=nullptr;
+    do
+    {
+        q=p;
+        p=p->next;
+        q=q->next;
+        if(q!=nullptr)
+        {
+            q=q->next;
+        }
+        else
+        {
+            q=nullptr;
+        }
+    }
+    while(p && q);
+    if(p==q)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+Node* LinkedList::concatenatingLinkedLists(int A[], int B[])
+{
+    Node *p=first;
+    while(p!=nullptr)
+    {
+        p=p->next;
+    }
+    p->next=second;
+    second=nullptr;
+}
+
+LinkedList::~LinkedList()
+{
+    Node *p=first;
+    while(first!=nullptr)
+    {
+        first=first->next;
+        delete p;
+        p=first;
+    }
+}
+
+int main()
+{
+    int A[]={1, 2, 3, 4, 5};
+    LinkedList l(A,5);
+    cout<<l.isSorted()<<endl;
+
+    l.insertElement(2,10);
+    cout<<l.isLoop()<<endl;
+
+
+
+    l.display();
+    cout<<l.sumOfElements()<<endl;
+    cout<<l.maxElement()<<endl;
+    cout<<l.isFound(7)<<endl;
+    cout<<l.isSorted()<<endl;
+    l.reversingBySlidingPoiners();
+    l.display();
+
+
+
+
+    return 0;
+}
