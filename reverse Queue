@@ -1,0 +1,75 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+
+void printQueue(queue <int > q)
+{
+    while(!q.empty())
+    {
+        cout<<q.front()<<" ";
+        q.pop();
+    }
+}
+int minElement(queue <int> & q)
+{
+    if(q.empty())
+    {
+        return 0;
+    }
+    int qSize=q.size();
+    int minEl=INT_MAX;
+    for(int i=0; i<qSize; i++)
+    {
+        if(minEl>q.front())
+        {
+            minEl=q.front();
+        }
+        q.pop();
+    }
+    return minEl;
+
+}
+
+
+queue <int> reverseQueue(queue <int > & q)
+{
+    queue <int> revQ;
+    stack <int> st;
+
+    while(!q.empty())
+    {
+
+        st.push(q.front());
+        q.pop();
+    }
+
+
+    while(!st.empty())
+    {
+        revQ.push(st.top());
+        st.pop();
+    }
+
+    return revQ;
+}
+
+int main()
+{
+    queue <int> q;
+    q.push(5);
+    q.push(4);
+    q.push(3);
+
+
+    cout<<endl;
+
+    printQueue(reverseQueue(q));
+
+
+
+
+
+
+    return 0;
+}
