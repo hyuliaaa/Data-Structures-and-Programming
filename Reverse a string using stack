@@ -30,3 +30,44 @@ int main()
 
     return 0;
 }
+
+
+
+//Code made into functions
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+string reverseString (std::string& str, stack <char>& s)
+{
+    string revStr;
+    for(int i=0; i<str.size(); i++)
+    {
+        s.push(str[i]);
+    }
+
+    while(!s.empty())
+    {
+        revStr+=s.top();
+        s.pop();
+    }
+
+    return revStr;
+}
+
+int main()
+{
+    stack <char> s;
+    std::string str;
+    std::string revStr;
+
+    getline(cin,str);
+
+    cout<<reverseString(str,s);
+
+
+
+
+    return 0;
+}
