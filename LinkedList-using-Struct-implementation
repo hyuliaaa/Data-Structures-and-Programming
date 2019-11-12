@@ -1,0 +1,292 @@
+#include <iostream>
+const int SZ=100;
+using namespace std;
+
+struct Node{
+    int data;
+    Node *next;
+}*first=nullptr, *second=nullptr, *third=nullptr;
+
+void create(int A[], int n)
+{
+    Node *t;
+    Node *last;
+
+    first=new Node;
+    first->data=A[0];
+    first->next=nullptr;
+
+    last=first;
+
+    for(int i=1; i<n; i++)
+    {
+        t=new Node;
+        t->data=A[i];
+        t->next=nullptr;
+        last->next=t;
+        last=t;
+    }
+}
+void create2(int B[], int n)
+{
+    Node *t;
+    Node *last;
+
+    second=new Node;
+    second->data=B[0];
+    second->next=nullptr;
+
+    last=second;
+
+    for(int i=1; i<n; i++)
+    {
+        t=new Node;
+        t->data=B[i];
+        t->next=nullptr;
+        last->next=t;
+        last=t;
+    }
+}
+
+void display(Node *p)
+{
+    while(p!=nullptr)
+    {
+        cout<<p->data<<" ";
+        p=p->next;
+    }
+}
+
+void recursiveDisplayingInRevOrder(Node *p)
+{
+    if(p!=nullptr)
+    {
+        recursiveDisplayingInRevOrder(p->next);
+        cout<<p->data<<" ";
+    }
+}
+
+int lenght(Node *p)
+{
+    int len=0;
+    while(p!=nullptr)
+    {
+        len++;
+        p=p->next;
+    }
+    return len;
+}
+
+int sum(Node *p)
+{
+    int sum=0;
+    while(p!=nullptr)
+    {
+        sum+=p->data;
+        p=p->next;
+    }
+    return sum;
+}
+
+int maxEl(Node *p)
+{
+    int maxEl=INT_MIN;
+    while(p!=nullptr)
+    {
+        if(p->data>maxEl)
+        {
+            maxEl=p->data;
+        }
+        p=p->next;
+    }
+    return maxEl;
+}
+
+bool isFound(Node *p , int key)
+{
+    while(p!=nullptr)
+    {
+        if(p->data==key)
+        {
+            return true;
+        }
+        p=p->next;
+    }
+    return false;
+}
+
+void insertingInLinkedList(Node *p, int x, int index)
+{
+    Node *t;
+    if(index<0 || index>lenght(p))
+        return;
+        t=new Node;
+        t->data=x;
+        if(index==0)
+        {
+            t->next=first;
+            first=t;
+
+        }
+        else
+        {
+            for(int i=0; i<index-1; i++)
+            {
+                p=p->next;
+            }
+            t->next=p->next;
+            p->next=t;
+        }
+
+}
+
+void deletingLinkedList(Node *p, int index)
+{
+    Node *q=nullptr;
+    int x;
+    if(index<1 || index>lenght(p))
+        return;
+
+    if(index==1)
+    {
+        p=first;
+        first=first->next;
+        x=p->data;
+        delete p;
+    }
+    else
+    {
+        for(int i=0; i<index-1; i++)
+        {
+            q=p;
+            p=p->next;
+        }
+        q->next=p->next;
+        x=p->data;
+        delete p;
+
+    }
+}
+
+bool isSorted(Node *p)
+{
+    int x=INT_MIN;
+    while(p!=nullptr)
+    {
+        if(p->data<x)
+            return false;
+        x=p->data;
+        p=p->next;
+
+    }
+    return true;
+}
+
+void reverseLinkedList(Node *p)
+{
+    Node *q=nullptr;
+    Node *r=nullptr;
+
+    while(p!=nullptr)
+    {
+        r=q;
+        q=p;
+        p=p->next;
+        q->next=r;
+    }
+    first=q;
+}
+
+void mergingLists(Node *p, Node *q)
+{
+   Node *last;
+   if(p->data<q->data)
+   {
+       third=last=p;
+       p=p->next;
+       third->next=nullptr;
+   }
+   else
+   {
+       third=last=q;
+       q=q->next;
+       third->next=nullptr;
+   }
+   while(p&&q)
+   {
+       if(p->data < q->data)
+       {
+           last->next=p;
+           last=p;
+           p=p->next;
+           last->next=nullptr;
+       }
+       else
+       {
+           last->next=q;
+           last=q;
+           q=q->next;
+           last->next=nullptr;
+       }
+   }
+   if(p)
+        last->next=p;
+   if(q)
+    last ->next=q;
+}
+
+bool isLoop (Node *f)
+{
+    Node *p;
+    Node *q;
+
+    p=q=f;
+    do
+    {
+        p=p->next;
+        q=q->next;
+        q=q?q->next:q;
+    }while(p&& q && p!=q);
+
+    if(p==q)
+    return 1;
+    else
+        return 0;
+}
+
+
+
+
+
+int main()
+{
+    int A[]={1, 2, 3, 4, 5};
+    create(A,5);
+    display(first);
+    cout<<endl;
+    cout<<isSorted(first)<<endl;
+    recursiveDisplayingInRevOrder(first);
+    cout<<endl;
+    cout<<lenght(first)<<endl;
+    cout<<sum(first)<<endl;
+    cout<<maxEl(first)<<endl;
+    cout<<isFound(first, 7)<<endl;
+    insertingInLinkedList(first, 8, 3);
+    display(first);
+    cout<<endl;
+
+    deletingLinkedList(first,1);
+    display(first);
+    cout<<endl;
+    deletingLinkedList(first,3);
+    display(first);
+    cout<<endl;
+    reverseLinkedList(first);
+    display(first);
+    cout<<endl;
+    cout<<"+++++"<<endl;
+
+    int B[]={10, 20, 30,40};
+
+    return 0;
+}
