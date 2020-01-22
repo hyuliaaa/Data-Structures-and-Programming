@@ -1,0 +1,68 @@
+  #include <iostream>
+#include <queue>
+
+using namespace std;
+
+void BFS(int G[][7], int startPoint, int dimension)
+{
+    int i=startPoint;
+    queue<int>q;
+    //array which contains all the vertices that we have visited
+    int visited[7]={0};
+
+    //printing the starting point
+    cout<<i<<" ";
+    //marking the place as visited
+    visited[i]=1;
+    //pushing it in the queue
+    q.push(i);
+
+    while(!q.empty())
+    {
+        //taking the first element of the queue
+        i=q.front();
+        //removing it from the queue
+        q.pop();
+        
+        for(int j=1; j<dimension; j++)
+        {
+            //if we have a rib between the verteces, and the current vertex is not visited
+            if(G[i][j]==1 && visited[j]==0)
+            {
+                cout<<j<<" ";
+                visited[j]=1;
+                q.push(j);
+            }
+        }
+    }
+
+}
+
+int main()
+{
+    int G[7][7]= {{0, 0, 0, 0, 0, 0, 0},
+                  {0, 0, 1, 1, 0, 0, 0},
+                  {0, 1, 0, 0, 1, 0, 0},
+                  {0, 1, 0, 0, 1, 0, 0},
+                  {0, 0, 1, 1, 0, 1, 1},
+                  {0, 0, 0, 0, 1, 0, 0},
+                  {0, 0, 0, 0, 1, 0, 0}};
+    BFS(G,1,7);
+
+
+
+    return 0;
+}
+  
+            1
+         /      \
+        /        \
+       2          3
+       \         / 
+         \      /
+             4
+            / \
+           /   \
+          5     6 
+    
+    
