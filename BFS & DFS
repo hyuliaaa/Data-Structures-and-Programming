@@ -38,6 +38,25 @@ void BFS(int G[][7], int startPoint, int dimension)
 
 }
 
+
+
+void DFS(int matrix[][7], int startingPoint, int dimension)
+{
+    static int visited[7]={0};
+    if(visited[startingPoint]==0)
+    {
+        cout<<startingPoint<<" ";
+        visited[startingPoint]=1;
+        for(int j=1; j<dimension; j++)
+        {
+            if(matrix[startingPoint][j]==1 && visited[j]==0)
+            {
+                DFS(matrix,j,dimension);
+            }
+        }
+    }
+}
+
 int main()
 {
     int G[7][7]= {{0, 0, 0, 0, 0, 0, 0},
@@ -48,10 +67,11 @@ int main()
                   {0, 0, 0, 0, 1, 0, 0},
                   {0, 0, 0, 0, 1, 0, 0}};
     BFS(G,1,7);
+    DFS(G,1,7); //1,2,4,3,5,6,
 
 
 
-    return 0;
+     return 0;
 }
   
             1
