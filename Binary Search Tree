@@ -1,0 +1,185 @@
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
+template <class T>
+struct Node
+{
+	T data;
+	Node<T> * left;
+	Node<T> *right;
+};
+
+Node <int> * createTree()
+{
+	Node <int> * r12 = new Node <int>;
+	r12->data = 8;
+	r12->left = NULL;
+	r12->right = NULL;
+
+	Node <int> * r11 = new Node <int>;
+	r11->data = 6;
+	r11->left = NULL;
+	r11->right = NULL;
+
+	Node <int > * r1 = new Node <int>;
+	r1->data = 7;
+	r1->left = r11;
+	r1->right = r12;
+
+	Node <int> * l12 = new Node <int>;
+	l12->data = 4;
+	l12->left = NULL;
+	l12->right = NULL;
+
+	Node <int> * l11 = new Node <int>;
+	l11->data = 2;
+	l11->left = NULL;
+	l11->right = NULL;
+
+
+	Node <int> * l1 = new Node <int>;
+	l1->data = 3;
+	l1->left = l11;
+	l1->right = l12;
+
+	Node <int> * root = new Node <int>;
+	root->data = 5;
+	root->left = l1;
+	root->right = r1;
+
+
+	return root;
+
+
+}
+
+
+Node <int> * newNode(int data)
+{
+	Node<int> * node = new Node<int>;
+	node->data = data;
+	node->left = NULL;
+	node->right = NULL;
+
+
+	return node;
+}
+
+Node <int> *insertElement(Node <int> *current, int data)
+{
+	if (current == NULL)
+	{
+		return newNode(data);
+	}
+	else
+	{
+		if (current->data > data)
+		{
+			current->left = insertElement(current->left, data);
+		}
+		else
+		{
+			current->right = insertElement(current->right, data);
+		}
+		return current;
+	}
+
+}
+
+template <class T>
+Node <T> *isFound(Node<T> *root, int element)
+{
+	if (root == nullptr)
+	{
+		return nullptr;
+	}
+	if (root->data == element)
+	{
+		return root;
+	}
+	else if (element < root->data)
+	{
+		return isFound(root->left, element);
+	}
+	else if (element > root->data)
+	{
+		return isFound(root->right, element);
+	}
+
+}
+
+int minElement(Node <int>*root)
+{
+	Node <int>*current = root;
+	while (current->left != 0)
+	{
+		current = current->left;
+	}
+	return current->data;
+
+}
+
+int maxElement (Node <int > *root)
+{
+    Node <int> *current=root;
+    while(current->right!=nullptr)
+    {
+        current=current->right;
+    }
+
+    return current->data;
+}
+
+
+Node *sortedArrayToBST(int arr[], int start, int end)
+{
+    if (start > end)
+    {
+        return nullptr;
+    }
+
+    int mid=(start+end)/2;
+    Node *root=newNode(mid);
+
+    root->left=sortedArrayToBST(arr,start, mid-1);
+
+    root->right=sortedArrayToBST(arr,mid+1, end);
+
+    return root;
+}
+
+
+void printEl(Node <int> *root)
+{
+      if(root==nullptr)
+      {
+          return;
+      }
+
+      printEl(root->left);
+      cout<<root->data<<" ";
+      printEl(root->right);
+
+}
+
+
+
+
+int main() {
+
+
+	Node<int> *tree = createTree();
+	cout << isFound(tree, 2) << endl;
+	printEl(tree);
+
+
+
+
+
+
+	return 0;
+
+	}
+
+
