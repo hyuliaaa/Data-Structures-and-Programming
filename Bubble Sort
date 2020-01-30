@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+
+void inputArr(int arr[], int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+}
+
+
+void bubbleSort(int A[], int n)
+{
+    bool isThereSwap;
+    for(int i=0; i<n-1; i++)
+    {
+        isThereSwap=0;
+        for(int j=0; j<n-1-i; j++)
+        {
+            if(A[j]>A[j+1])
+            {
+                swap(A[j],A[j+1]);
+                isThereSwap=1;
+            }
+        }
+        if(isThereSwap==0)
+        {
+            cout<<"The array is already sorted!" <<endl;
+            return;
+        }
+    }
+
+}
+
+void outputArr(int arr[], int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+}
+
+
+int main()
+{
+    int arr[100];
+    int n;
+    cin>>n;
+
+    inputArr(arr,n);
+    bubbleSort(arr,n);
+    outputArr(arr,n);
+
+
+
+    return 0;
+}
+
+//Complexity 
+//max time - O(n^2)
+//min time - O(n) -->here the array is already sorted!!!!
+
