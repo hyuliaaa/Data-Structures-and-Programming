@@ -31,7 +31,7 @@ int main()
             }
         }
     }
-    std::cout<<k[n][m];
+    std::cout<<k[n][m]; // maximazed profit
 
 
     return 0;
