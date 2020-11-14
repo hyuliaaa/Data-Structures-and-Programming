@@ -30,7 +30,7 @@ template <typename T>
 Stack<T>::Stack() :top(nullptr) {}
 
 template <typename T>
-void Stack<T>::copy(const Stack<int>& other)  //TODO
+void Stack<T>::copy(const Stack<int>& other) 
 {
     if (other.isEmpty())
     {
