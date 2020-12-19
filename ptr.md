@@ -1,5 +1,5 @@
 **Pointers**
-  syntax | meaning
+  SYNTAX | MEANING
   -------|--------
   int const *ptr | ptr is a pointer to const int 
   const int *ptr | ptr is a pointer to int constant (i.e. const int)
