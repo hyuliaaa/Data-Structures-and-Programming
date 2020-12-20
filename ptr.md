@@ -55,8 +55,8 @@ int main() {
     cout<<*matrix[1]<<endl;//5
     cout<<*matrix[2]<<endl;  //9
     cout<<&matrix[1]<<endl; //address of 5
-    cout<<matrix[0][1]<<endl;
-    cout<<(*(*(matrix)+1))<<endl;
+    cout<<matrix[0][1]<<endl; //2
+    cout<<(*(*(matrix)+1))<<endl; //2
 
 
 
