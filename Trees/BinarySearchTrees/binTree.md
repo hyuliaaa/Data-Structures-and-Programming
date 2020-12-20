@@ -86,3 +86,36 @@ void insert (Node *t, int key)
         }
 }
 ```
+- recursive 
+```c++
+Node *insert(Node *p, int key)
+{
+    Node *t;
+    if(p== nullptr)
+    {
+        t=new Node;
+        t->data=key;
+        t->left= nullptr;
+        t->right= nullptr;
+        return t;
+    }
+    if(key< p->data)
+    {
+        p->left=insert(p->left,key);
+    }
+    else
+    {
+        p->right=insert(p->right,key);
+    }
+    return p;
+}
+
+int main() {
+    Node *root= nullptr;
+    root=insert(root,30);
+    insert(root,20);
+    insert(root,25);
+  
+    return 0;
+}
+```
