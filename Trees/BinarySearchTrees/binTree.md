@@ -119,3 +119,4 @@ int main() {
     return 0;
 }
 ```
+- creating a BST is done for O(n*log n)
