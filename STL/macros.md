@@ -1,6 +1,6 @@
 # Predprocessor directives/Macros
 - instructions to compiler,
-- instructions are followed and performed before the compilation
+- instructions are followed and performed before compilation
 ```c++
 #define PI 3.14  // symbolic constant
 #define C cout
