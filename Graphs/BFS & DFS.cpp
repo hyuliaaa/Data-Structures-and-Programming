@@ -85,4 +85,52 @@ int main()
            /   \
           5     6 
     
+              
+              
+              
+              
+              
+ #include <iostream>
+#include <queue>
+
+void BFS(int mat[][8], int start, int n)
+{
+    int visited[8]={0};
+    std::cout<<start<<" ";
+    std::queue<int> q;
+    visited[start]=1;
+    q.push(start);
+
+    while (!q.empty())
+    {
+        int takeVertex=q.front();
+        q.pop();
+        for(int v=1; v<=n;v++)
+        {
+            if(mat[takeVertex][v]==1 && visited[v]==0)
+            {
+                std::cout<<v<<" ";
+                visited[v]=1;
+                q.push(v);
+            }
+
+        }
+
+    }
+}
+int main() {
+
+
+
+    int G[8][8]={{0,0,0,0,0,0,0,0},
+                 {0,0,1,1,1,0,0,0},
+                 {0,1,0,1,0,0,0,0},
+                 {0,1,1,0,1,1,0,0},
+                 {0,1,0,1,0,1,0,0},
+                 {0,0,0,1,1,0,1,1},
+                 {0,0,0,0,0,1,0,0},
+                 {0,0,0,0,0,1,0,0}};
+    BFS(G,1,8);
+    return 0;
+}             
     
