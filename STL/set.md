@@ -42,3 +42,32 @@ std::cout<<s.max_sizs(); //a very large number  , no concept of front and back, 
 - elements are unordered
 - allows duplicate elements
 - no reverse iterators allowed
+
+```c++
+
+    ///numbers are ordered
+    set<int>digits= {4, 1, 4 ,5, 0, 2 , 7 ,8 ,3 ,9 ,6 ,5,8 ,9 ,7 ,5 ,3, 4};
+    for (int d:digits)
+    {
+        cout<<d<<" ";
+    }
+
+    cout<<endl;
+    cout<<endl;
+
+    set<char>letters;
+    string sentence="the quick brown fox jumps over the lazy dog";
+    istringstream sentenceIn(sentence);
+    char letter;
+
+    while(sentenceIn>>letter)
+    {
+        letters.insert(letter);
+    }
+    ///letters are ordered in alphabetical order
+    for(set<char>::iterator it=letters.begin(); it!=letters.end(); it++)
+    {
+        cout<<*it;
+    }
+    cout<<endl;
+```
