@@ -49,7 +49,8 @@ std::cout<<s.max_sizs(); //a very large number  , no concept of front and back, 
     set<int>digits= {4, 1, 4 ,5, 0, 2 , 7 ,8 ,3 ,9 ,6 ,5,8 ,9 ,7 ,5 ,3, 4};
     for (int d:digits)
     {
-        cout<<d<<" ";
+        cout<<d<<" ";  //0 1 2 3 4 5 6 7 8 9
+
     }
 
     cout<<endl;
@@ -69,5 +70,6 @@ std::cout<<s.max_sizs(); //a very large number  , no concept of front and back, 
     {
         cout<<*it;
     }
+   //abcdefghijklmnopqrstuvwxyz
     cout<<endl;
 ```
