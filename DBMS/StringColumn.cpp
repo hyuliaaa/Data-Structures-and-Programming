@@ -21,7 +21,23 @@ void StringColumn::setName(const std::string &nameCol) {
 }
 
 void StringColumn::addValue(const std::string &val) {
-    v.push_back(val);
+    if(primaryKey)
+    {
+        if(findValue(val))
+        {
+            std::cerr<<"String is already found in the column!"<<std::endl;
+            return;
+        }
+        else
+        {
+            v.push_back(val);
+        }
+    }
+    else
+    {
+        v.push_back(val);
+    }
+
 }
 
 void StringColumn::printValue(int row) {
@@ -39,7 +55,23 @@ void StringColumn::updateValue(int row, std::string &val) {
         std::cerr<<"NO SUCH ROW";
         return;
     }
-    v[row]=val;
+    if(primaryKey)
+    {
+        if(findValue(val))
+        {
+            std::cerr<<"String is already found in the column!"<<std::endl;
+            return;
+        }
+        else
+        {
+            v[row]=val;
+        }
+    }
+    else
+    {
+        v[row]=val;
+    }
+
 }
 
 bool StringColumn::hasValueInRow(int row, std::string &val) {
@@ -49,4 +81,40 @@ bool StringColumn::hasValueInRow(int row, std::string &val) {
         return false;
     }
     return v[row] == val;
+}
+
+int StringColumn::count() {
+    return v.size();
+}
+
+std::string StringColumn::maxValue() {
+    std::string str="Operation maximum value for string column unavailable!\n";
+    return  str;
+}
+
+std::string StringColumn::minValue() {
+    std::string str="Operation minimal value for string column unavailable!\n";
+    return  str;
+}
+
+std::string StringColumn::sum() {
+    std::string str="Operation sum for string column unavailable!\n";
+    return  str;
+}
+
+std::string StringColumn::average() {
+    std::string str="Operation average for string column unavailable!\n";
+    return  str;
+}
+
+bool StringColumn::findValue(const std::string &str) {
+    for(const auto & i : v)
+    {
+        if(i==str)
+        {
+            return true;
+        }
+
+    }
+return false;
 }

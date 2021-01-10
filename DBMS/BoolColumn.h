@@ -11,8 +11,9 @@ class BoolColumn: public Column {
 private:
     std::vector<bool> v;
     std::string name;
+    bool primaryKey;
 public:
-    BoolColumn(const std::string& nameVal,const  std::vector<bool>& vec):name(nameVal),v(vec){};
+    BoolColumn(const std::string& nameVal,const  std::vector<bool>& vec,bool primKey):name(nameVal),v(vec),primaryKey(primKey){};
     virtual int getType();
     virtual void printName();
     virtual std::string getName();
@@ -24,6 +25,12 @@ public:
     virtual void printValue(int row);
     virtual void updateValue(int row, std::string& val);
     virtual bool hasValueInRow(int row, std::string& val);
+    virtual int count();
+    virtual std::string maxValue();
+    virtual std::string minValue();
+    virtual std::string sum();
+    virtual std::string average();
+    bool findValue(bool value);
 };
 
 

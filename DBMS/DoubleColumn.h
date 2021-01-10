@@ -11,8 +11,9 @@ class DoubleColumn: public Column {
 private:
         std::vector<double> v;
         std::string name;
+        bool primaryKey;
 public:
-    DoubleColumn(const std::string& nameVal, const std::vector<double>& vec):name(nameVal),v(vec){};
+    DoubleColumn(const std::string& nameVal, const std::vector<double>& vec, bool primKey):name(nameVal),v(vec),primaryKey(primKey){};
 
     virtual int getType();
     virtual void printName();
@@ -24,6 +25,13 @@ public:
     virtual void printValue(int row);
     virtual void updateValue(int row, std::string& val);
     virtual bool hasValueInRow(int row, std::string& val);
+    virtual int count();
+    virtual std::string maxValue();
+    virtual std::string minValue();
+    virtual std::string sum();
+    virtual std::string average();
+    bool findValue(double value);
+
 };
 
 

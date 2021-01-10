@@ -10,6 +10,7 @@
 #include "DoubleColumn.h"
 #include "BoolColumn.h"
 #include "StringColumn.h"
+#include <functional>
 
 
 class Table {
@@ -17,22 +18,27 @@ private:
     std::string name;
     std::vector<Column*>table;
 
+    void copy(const Table& other);
+    void free();
 public:
     Table();
-    Table (const std::string& nameVal);
+    Table(const std::string& nameVal);
+    Table(const Table& other);
+    Table& operator=(const Table& other);
     ~Table();
 
 
     //adds an empty column
-
-    void addColumn(const std::string& colName, int type);
+    void addColumn(const std::string& colName, int type, bool hasPrimaryKey);
     //here the added column must be allocated dynamically on heap;
     void addColumn(Column *c);
     void printName();
     void setName(const std::string& nameVal);
     void printTable();
     void printColumn(int number);
-    void addRow();
+    void updateColumn( );
+    void insertRow();
+
     std::string& getName();
 
 };

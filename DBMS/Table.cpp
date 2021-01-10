@@ -16,26 +16,26 @@ std::string &Table::getName() {
     return name;
 }
 
-void Table::addColumn(const std::string &colName, int type) {
+void Table::addColumn(const std::string &colName, int type, bool hasPrimaryKey) {
     if(type==0)
     {
             std::vector <int> v(table.size(),0);
-            table.push_back(new IntColumn(colName,v));
+            table.push_back(new IntColumn(colName,v,hasPrimaryKey));
     }
     else if(type==1)
     {
         std::vector <double > v(table.size(),0);
-        table.push_back(new DoubleColumn(colName,v));
+        table.push_back(new DoubleColumn(colName,v,hasPrimaryKey));
     }
     else if(type==2)
     {
-        std::vector <std::string > v(table.size(),0);
-        table.push_back(new StringColumn(colName,v));
+        std::vector <std::string > v(table.size(),"");
+        table.push_back(new StringColumn(colName,v,hasPrimaryKey));
     }
     else if(type==3)
     {
-        std::vector <bool > v(table.size(),0);
-        table.push_back(new BoolColumn(colName,v));
+        std::vector <bool > v(table.size(),false);
+        table.push_back(new BoolColumn(colName,v,hasPrimaryKey));
     }
     else
     {
@@ -63,19 +63,14 @@ void Table::printTable() {
 }
 
 Table::Table(const std::string &nameVal):name(nameVal) {
-    for(int i=0; i<table.size();i++)
+    for(size_t i=0; i<table.size();i++)
     {
         table[i]= nullptr;
     }
 }
 
 Table::~Table() {
-    for(int i=0; i<table.size();i++)
-    {
-        delete table[i];
-        table[i]= nullptr;
-    }
-    table.clear();
+   free();
 
 }
 
@@ -104,8 +99,8 @@ void Table::printColumn(int number) {
     }
 }
 
-void Table::addRow() {
-    for(int i=0; i<table.size();i++)
+void Table::insertRow() {
+    for(size_t i=0; i<table.size();i++)
     {
             std:: string value;
             std::cout<<"Enter a value for " <<table[i]->getName()<<" :";
@@ -113,6 +108,39 @@ void Table::addRow() {
             table[i]->addValue(value);
 
     }
+}
+
+void Table::copy(const Table &other) {
+    name=other.name;
+    for(size_t i=0; i<other.table.size();i++)
+    {
+        table[i]=other.table[i];
+    }
+
+}
+
+void Table::free() {
+    for(size_t i=0; i<table.size();i++)
+    {
+        delete table[i];
+        table[i]= nullptr;
+    }
+    table.clear();
+
+}
+
+Table::Table(const Table &other) {
+    copy(other);
+
+}
+
+Table &Table::operator=(const Table &other) {
+    if(this!=&other)
+    {
+        free();
+        copy(other);
+    }
+    return *this;
 }
 
 

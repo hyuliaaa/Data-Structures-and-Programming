@@ -21,18 +21,55 @@ void BoolColumn::setName(const std::string &nameCol) {
 }
 
 void BoolColumn::addValue(const std::string &val) {
-    if(val=="true")
+    if(primaryKey)
     {
-        v.push_back(true);
-    }
-    else if(val=="false")
-    {
-        v.push_back(false);
+        if(val=="TRUE")
+        {
+            if(findValue(true))
+            {
+                std::cerr<<"An element with that value is already present in the column"<<std::endl;
+                return;
+            }
+            else
+            {
+                v.push_back(true);
+            }
+        }
+        else if(val=="FALSE")
+        {
+            if(findValue(false))
+            {
+                std::cerr<<"An element with that value is already present in the column"<<std::endl;
+                return;
+            }
+            else
+            {
+                v.push_back(true);
+            }
+        }
+        else
+        {
+            std::cerr<<"You  have entered wrong value for bool!"<<std::endl;
+            return;
+        }
+
+
     }
     else
-    {
-        std::cerr<<"You have entered wrong Bool!";
-        return;
+        {
+        if (val == "TRUE")
+        {
+            v.push_back(true);
+        }
+        else if (val == "FALSE")
+        {
+            v.push_back(false);
+        }
+        else
+            {
+            std::cerr << "You have entered wrong value for Bool!";
+            return;
+        }
     }
 }
 
@@ -51,18 +88,55 @@ void BoolColumn::updateValue(int row, std::string &val) {
         std::cerr<<"NO SUCH ROW";
         return;
     }
-    if(val=="true")
+    if(primaryKey)
     {
-        v[row]=true;
-    }
-    else if(val=="false")
-    {
-        v[row]= false;
+        if(val=="TRUE")
+        {
+            if(findValue(true))
+            {
+                std::cerr<<"An element with that value is already present in the column"<<std::endl;
+                return;
+            }
+            else
+            {
+                v[row]= true;
+            }
+        }
+        else if(val=="FALSE")
+        {
+            if(findValue(false))
+            {
+                std::cerr<<"An element with that value is already present in the column"<<std::endl;
+                return;
+            }
+            else
+            {
+                v[row]= false;
+            }
+        }
+        else
+        {
+            std::cerr<<"You  have entered wrong value for bool!"<<std::endl;
+            return;
+        }
+
+
     }
     else
     {
-        std::cerr<<"You have entered wrong Bool!";
-        return;
+        if (val == "TRUE")
+        {
+            v[row]= true;
+        }
+        else if (val == "FALSE")
+        {
+            v[row]= false;
+        }
+        else
+        {
+            std::cerr << "You have entered wrong value for Bool!";
+            return;
+        }
     }
 
 }
@@ -75,6 +149,44 @@ bool BoolColumn::hasValueInRow(int row, std::string &val) {
         std::cerr<<"NO SUCH ROW";
         return false;
     }
-    return (val == "true" && v[row] == 1) || (val == "false" && v[row] == 0);
+    return (val == "TRUE" && v[row] == 1) || (val == "FALSE" && v[row] == 0);
 
+}
+
+int BoolColumn::count() {
+    return v.size();
+}
+
+std::string BoolColumn::maxValue() {
+
+        std::string str="Operation maximum value for bool column unavailable!\n";
+        return  str;
+
+}
+
+std::string BoolColumn::minValue() {
+    std::string str="Operation minimal value for bool column unavailable!\n";
+    return  str;
+}
+
+std::string BoolColumn::sum() {
+    std::string str="Operation sum for bool column unavailable!\n";
+    return  str;
+}
+
+std::string BoolColumn::average() {
+    std::string str="Operation average for bool column unavailable!\n";
+    return  str;
+}
+
+bool BoolColumn::findValue(bool value) {
+
+    for(size_t i=0; i<v.size();i++)
+    {
+        if(v[i]==value)
+        {
+            return true;
+        }
+    }
+    return false;
 }

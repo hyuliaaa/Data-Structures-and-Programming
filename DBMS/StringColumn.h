@@ -11,8 +11,9 @@ class StringColumn: public Column {
 private:
     std::vector<std::string> v;
     std::string name;
+    bool primaryKey;
 public:
-    StringColumn(const std::string& nameVal,const  std::vector<std::string>& vec):name(nameVal),v(vec){};
+    StringColumn(const std::string& nameVal,const  std::vector<std::string>& vec, bool primKey):name(nameVal),v(vec),primaryKey(primKey){};
 
     virtual int getType();
     virtual void printName();
@@ -25,6 +26,12 @@ public:
     virtual void printValue(int row);
     virtual void updateValue(int row, std::string& val);
     virtual bool hasValueInRow(int row, std::string& val);
+    virtual int count();
+    virtual std::string maxValue();
+    virtual std::string minValue();
+    virtual std::string sum();
+    virtual std::string average();
+    bool findValue(const std::string& str);
 
 
 };

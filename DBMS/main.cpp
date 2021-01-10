@@ -55,7 +55,7 @@ void intColTest()
     col.addValue("1");
     col.addValue("2");
 
-    std::cout<<col.getVecSize();
+    std::cout<<col.count();
      std::string val="6";
     col.updateValue(0,val);
     col.printVectorValues();
@@ -80,14 +80,20 @@ void ex()
 int main() {
 
     Table t("students");
-    Column* ptr = new IntColumn ("people", {1,2,3});
-    Column * ptr2=new DoubleColumn ("marks4",{7.9,8,9});
-    t.addColumn(ptr);
-    t.addColumn(ptr2);
-    t.addRow();
+    Column* ptr = new IntColumn ("people", {1,2,3}, true);
+ //   Column * ptr2=new BoolColumn ("marks4",{1,0,1},0);
+  //  DoubleColumn c("marks4",{7.9,8,9});
+     ptr->addValue("4");
+     ptr->printValue(3);
+   // std::cout<<ptr2->average();
 
 
-    t.printTable();
+//    t.addColumn(ptr);
+//    t.addColumn(ptr2);
+//    t.insertRow();
+//
+//
+//    t.printTable();
 
 
 
