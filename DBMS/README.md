@@ -22,14 +22,14 @@ public:
     virtual void printValue(int row)=0; //prints value of row
     virtual std::string getName()=0; //gets name of column
     virtual size_t getSize()=0; //gets size of column
-    virtual void updateValue(int row, std::string& val)=0; //updates value of current row
-    virtual bool hasValueInRow(int row, std::string& val) = 0; //checks whether we have a value on a specific row
+    virtual void updateValue(int row,const std::string& val)=0; //updates value of current row
+    virtual bool hasValueInRow(int row,const std::string& val,const std::string& op) = 0; //checks whether we have a value on a specific row
     virtual int count()=0; //number of elements in a column
     virtual std::string maxValue()=0; //finds max value of a column
     virtual std::string minValue()=0; //finds min value of a column
     virtual std::string average()=0; //find average of all values in a column
     virtual std::string sum()=0; //finds sum of all all elements in a column
-
+    virtual void orderBy(const std::string& str)=0;
     virtual void saveColumn(std::ostream& out)=0;
 
 
