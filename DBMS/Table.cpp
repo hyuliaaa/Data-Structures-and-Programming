@@ -51,7 +51,7 @@ void Table::addColumn(const std::string &colName, int type, bool hasPrimaryKey) 
 void Table::printTable() {
 
 
-    for(size_t i=0; i<table[0]->getSize();i++)
+    for(size_t i=1; i<table[0]->getSize();i++)  //starts from one, because otherwise it counts the empty row
     {
 
            printRow(i);
@@ -98,6 +98,13 @@ void Table::printColumn(int number) {
 }
 
 void Table::insertRow() {
+    if(table.size()==0)
+    {
+        std:: string value;
+        std::cout<<"Enter a value for " <<table[0]->getName()<<" :";
+        std::getline(std::cin,value);
+        table[0]->addValue(value);
+    }
     for(size_t i=0; i<table.size();i++)
     {
             std:: string value;
