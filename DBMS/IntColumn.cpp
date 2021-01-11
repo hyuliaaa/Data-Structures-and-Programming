@@ -51,7 +51,7 @@ void IntColumn::printValue(int row) {
     std::cout<<v[row]<<" ";
 }
 
-void IntColumn::updateValue(int row, std::string& val) {
+void IntColumn::updateValue(int row, const std::string& val) {
     if(row>=v.size())
     {
         std::cerr<<"NO SUCH ROW"<<std::endl;
@@ -84,14 +84,42 @@ void IntColumn::setName(const std::string& nameCol) {
     name=nameCol;
 }
 
-bool IntColumn::hasValueInRow(int row, std::string &val) {
+bool IntColumn::hasValueInRow(int row,const std::string &val,const std::string& op) {
     int intVal=stoi(val);
     if(v.size()<=row)
     {
         std::cerr<<"NO SUCH ROW";
         return false;
     }
-    return v[row] == intVal;
+
+    if(op =="=") {
+        return v[row] == intVal;
+    }
+    else if(op ==">")
+    {
+        return v[row]>intVal;
+    }
+    else if(op ==">=")
+    {
+        return v[row]>=intVal;
+    }
+    else if(op=="<")
+    {
+        return v[row]<=intVal;
+    }
+    else if(op=="<=")
+    {
+        return v[row]<=intVal;
+    }
+    else if(op=="!=")
+    {
+        return v[row]!=intVal;
+    }
+    else
+    {
+        std::cerr<<"INVALID OPERATION" <<std::endl;
+        return false;
+    }
 }
 
 
@@ -181,5 +209,19 @@ void IntColumn::saveColumn(std::ostream &out) {
     }
 }
 
+void IntColumn::orderBy(const std::string &str) {
+    if(str=="ASC") {
+        std::sort(v.begin(),  v.end());
+    }
+    else if(str=="DESC")
+    {
+        std::sort(v.begin(),  v.end(), std::greater<int>());
+    }
+    else
+    {
+        std::cout<<"INVALID INPUT!";
+        return;
+    }
+}
 
 

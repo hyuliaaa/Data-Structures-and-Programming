@@ -3,20 +3,19 @@
 //
 
 #include "DatabaseSystem.h"
-#DEFINE MAX_SIZE 1000000;
+
 bool DatabaseSystem::createTable(const std::string &name) {
-    for(size_t i=0; i<db.size();i++)
-    {
-        if(name==db[i].getName())
+
+    for (auto it = db.begin(); it != db.end(); ++it){
+        if(name==it->getName())
         {
             std::cout<<"Table with that name already exists!"<<std::endl;
             return false;
         }
-
     }
-    std::cout<<"DB SIZE: "<<db.size()<<std::endl;
 
-    db.resize(100000)
+
+
     db.push_back(Table(name));
 
     std::cout<<"Table "<<name<<" created."<<std::endl;
@@ -24,42 +23,40 @@ bool DatabaseSystem::createTable(const std::string &name) {
 }
 
 void DatabaseSystem::insertInto(const std::string &name) {
-    for(size_t i=0; i<db.size();i++)
-    {
 
-        if(name==db[i].getName())
+    for (auto it = db.begin(); it != db.end(); ++it){
+        if(name==it->getName())
         {
-
-            db[i].insertRow();
-
+            it->insertRow();
         }
     }
 }
 
 void DatabaseSystem::addColumn(const std::string &name, const std::string &colName, int type, bool hasPrimaryKey) {
-    for(int i=0; i<db.size();i++)
+    for (auto it = db.begin(); it != db.end(); ++it)
     {
-        if(name==db[i].getName())
+        if(name==it->getName())
         {
-            db[i].addColumn(colName,type,hasPrimaryKey);
+            it->addColumn(colName,type,hasPrimaryKey);
         }
     }
 }
 
 void DatabaseSystem::addColumn(const std::string &name, Column *c) {
-    for(int i=0; i<db.size();i++)
-    {
-        if(name==db[i].getName())
+
+    for (auto it = db.begin(); it != db.end(); ++it){
+        if(name==it->getName())
         {
-            db[i].addColumn(c);
+            it->addColumn(c);
+
         }
     }
 }
 
 bool DatabaseSystem::findTable(const std::string &name) {
-    for(int i=0; i<db.size();i++)
+    for (auto it = db.begin(); it != db.end(); ++it)
     {
-        if(name==db[i].getName())
+        if(name==it->getName())
         {
             return true;
         }
@@ -69,27 +66,75 @@ bool DatabaseSystem::findTable(const std::string &name) {
 }
 
 void DatabaseSystem::printTableNames() {
-    for(size_t i=0; i<db.size();i++)
-    {
-        std::cout<<db[i].getName()<<std::endl;
+
+    for (auto it = db.begin(); it != db.end(); ++it){
+            std::cout <<it->getName()<<std::endl;
+
+
     }
 
 }
 
-int DatabaseSystem::getSizeofDataBase() {
-    return db.size();
-}
 
 void DatabaseSystem::printTableWithName(const std::string &name) {
-    for(size_t i=0; i<db.size();i++)
-    {
-        if(name==db[i].getName())
+
+    for (auto it = db.begin(); it != db.end(); ++it){
+        if(name==it->getName())
         {
-            db[i].printTable();
+            it->select();
         }
     }
 
 }
+
+
+
+void DatabaseSystem::saveTable(const std::string &tableName, const std::string &filename) {
+    for(auto it=db.begin();it!=db.end();++it)
+    {
+        if(tableName==it->getName())
+        {
+            it->saveToFile(filename);
+        }
+    }
+}
+
+void DatabaseSystem::selectStar(const std::string &name) {
+    for(auto it=db.begin();it!= db.end();++it)
+    {
+        if(name==it->getName())
+        {
+            it->select();
+        }
+    }
+}
+
+int DatabaseSystem::count(const std::string &tableName, int column, const std::string &key,const std::string& op) {
+    int counter=0;
+    for(auto it=db.begin();it!=db.end();++it)
+    {
+        if(tableName==it->getName())
+        {
+
+            counter=it->count(column,key,op);
+        }
+    }
+    return counter;
+}
+
+void
+DatabaseSystem::update(const std::string &tableName, int column, const std::string &key, const std::string &newVal,const std::string& op) {
+    for(auto it=db.begin();it!=db.end();++it)
+    {
+        if(tableName==it->getName())
+        {
+
+            it->update(column,key,newVal,op);
+        }
+    }
+}
+
+
 
 
 

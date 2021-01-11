@@ -38,15 +38,16 @@ public:
     void setName(const std::string& nameVal);
     void printTable();
     void printColumn(int number);
-    void updateColumn( );
     void insertRow();
     void printRow(int row);
     void select(); //this is select* which chooses all columns in the table and prints them "SELECT * FROM students
-
+    int count(int column,const std::string& key,const std::string& op); //returns count of rows that have key
+    void update(int column,const std::string& key,const std::string& newVal,const std::string& op); //updates rows with key to newVal
 
     void saveToFile(const std::string& filename);
 
     std::string& getName();
+
 
 };
 

@@ -56,7 +56,7 @@ void BoolColumn::addValue(const std::string &val) {
 
     }
     else
-        {
+    {
         if (val == "TRUE")
         {
             v.push_back(true);
@@ -66,7 +66,7 @@ void BoolColumn::addValue(const std::string &val) {
             v.push_back(false);
         }
         else
-            {
+        {
             std::cerr << "You have entered wrong value for Bool!";
             return;
         }
@@ -82,7 +82,7 @@ void BoolColumn::printValue(int row) {
     printInWords(v[row]);
 }
 
-void BoolColumn::updateValue(int row, std::string &val) {
+void BoolColumn::updateValue(int row,const std::string &val) {
     if(v.size()>=row)
     {
         std::cerr<<"NO SUCH ROW";
@@ -143,7 +143,7 @@ void BoolColumn::updateValue(int row, std::string &val) {
 
 
 
-bool BoolColumn::hasValueInRow(int row, std::string &val) {
+bool BoolColumn::hasValueInRow(int row,const std::string &val,const std::string& op) {
     if(v.size()<=row)
     {
         std::cerr<<"NO SUCH ROW";
@@ -159,8 +159,8 @@ int BoolColumn::count() {
 
 std::string BoolColumn::maxValue() {
 
-        std::string str="Operation maximum value for bool column unavailable!\n";
-        return  str;
+    std::string str="Operation maximum value for bool column unavailable!\n";
+    return  str;
 
 }
 
@@ -215,4 +215,9 @@ void BoolColumn::printInWords(bool el) {
     {
         std::cout<<"FALSE"<<" ";
     }
+}
+
+void BoolColumn::orderBy(const std::string &s) {
+    std::cerr<<"Operation sort for bool column unavailable!\n";
+    return;
 }

@@ -49,7 +49,7 @@ void StringColumn::printValue(int row) {
     std::cout<<v[row]<<" ";
 }
 
-void StringColumn::updateValue(int row, std::string &val) {
+void StringColumn::updateValue(int row,const std::string &val) {
     if(v.size()>=row)
     {
         std::cerr<<"NO SUCH ROW";
@@ -74,13 +74,41 @@ void StringColumn::updateValue(int row, std::string &val) {
 
 }
 
-bool StringColumn::hasValueInRow(int row, std::string &val) {
+bool StringColumn::hasValueInRow(int row,const std::string &val, const std::string& op) {
     if(v.size()>=row)
     {
         std::cerr<<"NO SUCH ROW";
         return false;
     }
-    return v[row] == val;
+    if(op =="=") {
+        return v[row] ==  val;
+    }
+    else if(op ==">")
+    {
+        return v[row]> val;
+    }
+    else if(op ==">=")
+    {
+        return v[row]>= val;
+    }
+    else if(op=="<")
+    {
+        return v[row]<= val;
+    }
+    else if(op=="<=")
+    {
+        return v[row]<= val;
+    }
+    else if(op=="!=")
+    {
+        return v[row]!= val;
+    }
+    else
+    {
+        std::cerr<<"INVALID OPERATION" <<std::endl;
+        return false;
+    }
+
 }
 
 int StringColumn::count() {
@@ -116,7 +144,7 @@ bool StringColumn::findValue(const std::string &str) {
         }
 
     }
-return false;
+    return false;
 }
 
 void StringColumn::saveColumn(std::ostream &out) {
@@ -133,4 +161,20 @@ void StringColumn::saveColumn(std::ostream &out) {
         out.write((char *)& sizeStr, sizeof(size_t));
         out.write(v[i].c_str(),sizeStr);
     }
+}
+
+void StringColumn::orderBy(const std::string &str) {
+    if(str=="ASC") {
+        std::sort(v.begin(),  v.end());
+    }
+    else if(str=="DESC")
+    {
+        std::sort(v.rbegin(),  v.rend());
+    }
+    else
+    {
+        std::cout<<"INVALID INPUT!";
+        return;
+    }
+
 }

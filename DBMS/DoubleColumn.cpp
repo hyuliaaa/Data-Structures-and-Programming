@@ -54,7 +54,7 @@ void DoubleColumn::printValue(int row) {
     std::cout<<v[row]<<" ";
 }
 
-void DoubleColumn::updateValue(int row, std::string &val) {
+void DoubleColumn::updateValue(int row,const std::string &val) {
     if(v.size()>=row)
     {
         std::cerr<<"NO SUCH ROW";
@@ -86,14 +86,41 @@ void DoubleColumn::setName(const std::string& nameCol)
     name=nameCol;
 }
 
-bool DoubleColumn::hasValueInRow(int row, std::string &val) {
+bool DoubleColumn::hasValueInRow(int row,const std::string &val,const std::string& op) {
     if(v.size()<=row)
     {
         std::cerr<<"NO SUCH ROW";
         return false;
     }
     double doubleVal=stod(val);
-    return v[row] == doubleVal;
+    if(op =="=") {
+        return v[row] == doubleVal;
+    }
+    else if(op ==">")
+    {
+        return v[row]>doubleVal;
+    }
+    else if(op ==">=")
+    {
+        return v[row]>=doubleVal;
+    }
+    else if(op=="<")
+    {
+        return v[row]<=doubleVal;
+    }
+    else if(op=="<=")
+    {
+        return v[row]<=doubleVal;
+    }
+    else if(op=="!=")
+    {
+        return v[row]!=doubleVal;
+    }
+    else
+    {
+        std::cerr<<"INVALID OPERATION" <<std::endl;
+        return false;
+    }
 }
 
 std::string DoubleColumn::maxValue() {
@@ -173,5 +200,20 @@ void DoubleColumn::saveColumn(std::ostream &out) {
     for(size_t i=0; i<v.size();i++)
     {
         out.write((char*)&v[i], sizeof(double));
+    }
+}
+
+void DoubleColumn::orderBy(const std::string &str) {
+    if(str=="ASC") {
+        std::sort(v.begin(),  v.end());
+    }
+    else if(str=="DESC")
+    {
+        std::sort(v.begin(),  v.end(), std::greater<double>());
+    }
+    else
+    {
+        std::cout<<"INVALID INPUT!";
+        return;
     }
 }

@@ -19,8 +19,8 @@ std::string &Table::getName() {
 void Table::addColumn(const std::string &colName, int type, bool hasPrimaryKey) {
     if(type==0)
     {
-            std::vector <int> v(table.size(),0);
-            table.push_back(new IntColumn(colName,v,hasPrimaryKey));
+        std::vector <int> v(table.size(),0);
+        table.push_back(new IntColumn(colName,v,hasPrimaryKey));
     }
     else if(type==1)
     {
@@ -51,11 +51,11 @@ void Table::addColumn(const std::string &colName, int type, bool hasPrimaryKey) 
 void Table::printTable() {
 
 
-    for(size_t i=1; i<table[0]->getSize();i++)  //starts from one, because otherwise it counts the empty row
+    for(size_t i=0; i<table[0]->getSize();i++)  //starts from one, because otherwise it counts the empty row
     {
 
-           printRow(i);
-           std::cout<<std::endl;
+        printRow(i);
+        std::cout<<std::endl;
 
     }
 }
@@ -68,7 +68,7 @@ Table::Table(const std::string &nameVal):name(nameVal) {
 }
 
 Table::~Table() {
-   free();
+    free();
 
 }
 
@@ -107,10 +107,10 @@ void Table::insertRow() {
     }
     for(size_t i=0; i<table.size();i++)
     {
-            std:: string value;
-            std::cout<<"Enter a value for " <<table[i]->getName()<<" :";
-            std::getline(std::cin,value);
-            table[i]->addValue(value);
+        std:: string value;
+        std::cout<<"Enter a value for " <<table[i]->getName()<<" :";
+        std::getline(std::cin,value);
+        table[i]->addValue(value);
 
     }
 }
@@ -165,7 +165,7 @@ Table &Table::operator=(const Table &other) {
     return *this;
 }
 
-void Table::saveToFile(const std::string &filename) {  //todo:think whether or not should i check for nullptr
+void Table::saveToFile(const std::string &filename) {
     std::ofstream outFile(filename,std::ios::binary);  //opening file for writing
     if(outFile.is_open())
     {
@@ -185,14 +185,44 @@ void Table::saveToFile(const std::string &filename) {  //todo:think whether or n
     }
 }
 
-void Table::updateColumn() {
 
-}
 
 void Table::select() {
-    printTable();
+    for(size_t i=1; i<table[0]->getSize();i++)  //starts from one, because otherwise it counts the empty row
+    {
+
+        printRow(i);
+        std::cout<<std::endl;
+
+    }
 }
 
+int Table::count(int column, const std::string &key,const std::string& op) {
+    if(column>=table.size())
+    {
+        std::cout<<"NO SUCH COLUMN!" <<std::endl;
+        return 0;
+    }
+    int counter=0;
+    for(size_t i=0; i<table[0]->getSize();i++)
+    {
+        if(table[column]->hasValueInRow(i, key,op))
+                 counter++;
+    }
+    return counter;
+}
 
+void Table::update(int column,const std::string& key,const std::string& newVal,const std::string& op) {
 
+    if(column>=table.size())
+    {
+        std::cout<<"NO SUCH COLUMN!" <<std::endl;
+        return;
+    }
+    for(size_t i=0; i<table[0]->getSize();i++)
+    {
+        if(table[column]->hasValueInRow(i, key,op))
+            table[column]->updateValue(i,newVal);
+    }
+}
 

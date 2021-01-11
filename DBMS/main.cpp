@@ -5,47 +5,7 @@
 #include "Table.h"
 #include "DoubleColumn.h"
 #include "DatabaseSystem.h"
-void table()
-{
-    std::vector<std::vector<int>> table;
-    table.push_back({ 1,2,3 }); //add column
-    table.push_back({ 5,6,8 });
-    std::cout << table.size() << std::endl;  //  number columns
-    std::cout << table[0].size(); //number of rows
 
-//    std::cout<<table[0][0]<<std::endl;  //1
-//    std::cout<<table[0][1]<<std::endl; //2
-//    std::cout<<table[0][2]<<std::endl; //3
-//    std::cout<<table[1][0]<<std::endl;//4
-    for (auto& row : table)
-    {
-        for (int col : row)
-        {
-            std::cout << col << " ";  //column in row
-        }
-    }
-
-    //    for(int i=0; i<table.size(); i++)
-    //    {
-    //        for(int j=0; j<table[i].size();j++)
-    //        {
-    //            std::cout<<table[i][j]<<" ";
-    //        }
-    //    }
-
-    for (int i = 0; i < table[0].size(); i++)
-    {
-        for (int j = 0; j < table[i].size(); j++)
-        {
-            std::cout << table[i][j] << " ";
-        }
-    }
-    //    vector<vector<int>> vec{ { 1, 2, 3 },
-    //                             { 4, 5, 6 },
-    //                             { 7, 8, 9, 4 } };
-
-
-};
 void intColTest()
 {
 
@@ -60,20 +20,10 @@ void intColTest()
     col.updateValue(0, val);
     col.printVectorValues();
 
-    std::cout << col.hasValueInRow(2, val);
+    std::cout << col.hasValueInRow(2, val,"=");
 
 }
 
-
-void ex()
-{
-    //    Table t("students");
-    //    IntColumn c("col", {1,2,3});
-    //    DoubleColumn dc("db",{2.0,2.1,3.3});
-    //    std::unique_ptr<Column> ptr=std::unique_ptr<IntColumn>(new IntColumn("col", {1,2,3}));
-    //    t.addColumnWithElements(ptr);
-    //    t.printTable();
-}
 bool validateString(std::string& str)
 {
     for (int i = 0; i < str.length(); i++)
@@ -90,14 +40,15 @@ bool validateString(std::string& str)
 void help()
 {
     std::cout << "The following commands are supported:" << std::endl;
-    std::cout << "CREATE TABLE                       creates table" << std::endl;
-    std::cout << "SAVE TABLE                         saves table" << std::endl;
-    std::cout << "INSERT INTO                        inserts row" << std::endl;
-    std::cout << "SELECT * FROM                        prints table" << std::endl;
-    std::cout << "AVERAGE                             find average" << std::endl;
+    std::cout << "CREATE TABLE                          creates table" << std::endl;
+    std::cout << "SAVE TABLE                            saves table" << std::endl;
+    std::cout << "INSERT INTO                           inserts row" << std::endl;
+    std::cout << "SELECT * FROM                         prints table" << std::endl;
+    std::cout << "PRINT TABLE WITH NAME                 prints table with given name" << std::endl;
+
 }
 
-void test() {
+void test() {  //works only on 1 table
     Table t;
     std::cout << "Welcome to Database Management System! To see a list of all commands type HELP: " << std::endl;
     std::cout << "> ";
@@ -164,7 +115,7 @@ void test() {
         {
             t.insertRow();
         }
-        else if (str == "SELECT * FROM")  //todo vij zashto printira 0
+        else if (str == "SELECT * FROM")
         {
             t.select();
         }
@@ -190,6 +141,15 @@ void test() {
     std::cout << "Exiting. Good bye!" << std::endl;
 
 
+}
+void help2()
+{
+    std::cout << "The following commands are supported:" << std::endl;
+    std::cout << "CREATE TABLE                       creates table" << std::endl;
+    std::cout << "SAVE TABLE                         saves table" << std::endl;
+    std::cout << "INSERT INTO                        inserts row" << std::endl;
+    std::cout << "SELECT * FROM                       all available  tables" << std::endl;
+    std::cout << "PRINT TABLES IN DB                  prints names of all tables in the database" << std::endl;
 }
 
 void test2()
@@ -262,7 +222,9 @@ void test2()
             std::string tableName;
             std::cout << "Enter table name: ";
             std::getline(std::cin, tableName);
-            db.insertInto(tableName);
+                db.insertInto(tableName);
+
+
         }
         else if (str == "PRINT TABLES IN DB")
         {
@@ -273,7 +235,39 @@ void test2()
             std::string tableName;
             std::cout << "Enter table name: ";
             std::getline(std::cin, tableName);
-            db.printTableWithName(tableName);
+
+            if(db.findTable(tableName))
+            {
+                db.printTableWithName(tableName);
+            }
+        }
+        else if(str == "SAVE TABLE")
+        {
+            std::string tableName;
+            std::cout << "Enter table name: ";
+            std::getline(std::cin, tableName);
+            std::string filename;
+            std::cout<<"Enter filename: ";
+            std::getline(std::cin,filename);
+            if(db.findTable(tableName))
+            {
+                db.saveTable(tableName, filename);
+            }
+        }
+        else if(str =="SELECT * FROM")
+        {
+            std::string tableName;
+            std::cout << "Enter table name: ";
+            std::getline(std::cin, tableName);
+            if(db.findTable(tableName))
+            {
+                db.selectStar(tableName);
+            }
+
+        }
+        else if(str=="HELP")
+        {
+            help2();
         }
         else
         {
@@ -286,32 +280,27 @@ void test2()
 
     std::cout << "Exiting. Good bye!" << std::endl;
 }
+
+void exampleForUpdate()
+{
+    Table t("students");
+    Column* ptr = new IntColumn ("people", {5,7,3}, false);
+    Column * ptr2=new IntColumn ("marks4",{1,2,2}, false);
+
+
+    t.addColumn(ptr);
+    t.addColumn(ptr2);
+    t.printTable();
+
+    t.update(0,"3","6",">=");
+    std::cout<<std::endl;
+    t.printTable();
+}
 int main() {
 
-    //  Table t("students");
-    //   Column* ptr = new IntColumn ("people", {1,2,3}, true);
-    //  Column * ptr2=new BoolColumn ("marks4",{1,0,1}, false);
-    //  //  DoubleColumn c("marks4",{7.9,8,9});
-    //   //  ptr->addValue("4");
-    // //    ptr->printValue(3);
-    //   // std::cout<<ptr2->average();
-    //
-    ////
-    //  t.addColumn(ptr);
-    //  t.addColumn(ptr2);
-    //////    t.insertRow();
-    //////
-    //////
-    //    DatabaseSystem db;
-    //    db.createTable("stood");
-    //    db.insertRow("stood");
-    ////    t.saveToFile("table.bin");
-////
-//    DatabaseSystem db;
-//    db.createTable("students");
-//    db.addColumn("students", "fn", 0, false);
-//     db.insertInto("students");
-//    db.printTableWithName("students");
+
+
+
      test2();
 
 

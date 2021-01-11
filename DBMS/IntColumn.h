@@ -9,9 +9,9 @@
 
 class IntColumn: public Column {
 private:
-   std::vector<int> v;
-   std::string name;
-   bool primaryKey; //if a given column is chosen to be a primary key, there should be no 2 different rows with equal value in the column
+    std::vector<int> v;
+    std::string name;
+    bool primaryKey; //if a given column is chosen to be a primary key, there should be no 2 different rows with equal value in the column
 
 public:
     IntColumn(){};
@@ -24,8 +24,8 @@ public:
     virtual size_t getSize(){ return v.size();};
     virtual void addValue(const std::string& val);
     virtual void printValue(int row);
-    virtual void updateValue(int row, std::string& val);
-    virtual bool hasValueInRow(int row, std::string& val);
+    virtual void updateValue(int row,const std::string& val);
+    virtual bool hasValueInRow(int row, const std::string& val, const std::string& op);
     virtual int count();
     virtual std::string maxValue();
     virtual std::string minValue();
@@ -33,8 +33,10 @@ public:
     virtual std::string average();
     void printVectorValues();
     bool findValue(int val);
+    virtual void orderBy(const std::string& str);
 
     virtual void saveColumn(std::ostream& out);
+
 
 
 };
