@@ -74,12 +74,12 @@ void BoolColumn::addValue(const std::string &val) {
 }
 
 void BoolColumn::printValue(int row) {
-    if(v.size()>=row)
+    if(v.size()<=row)
     {
         std::cerr<<"NO SUCH ROW";
         return;
     }
-    std::cout<<v[row];
+    printInWords(v[row]);
 }
 
 void BoolColumn::updateValue(int row, std::string &val) {
@@ -189,4 +189,30 @@ bool BoolColumn::findValue(bool value) {
         }
     }
     return false;
+}
+
+void BoolColumn::saveColumn(std::ostream &out) {
+    int type=getType();
+    out.write((char *)(&type), sizeof(int));
+    size_t sizeName=name.size();
+    out.write((char*)&sizeName, sizeof(size_t));
+    out.write(name.c_str(),sizeName);
+    out.write((char*)&primaryKey, sizeof(bool));
+    for(size_t i=0; i<v.size();i++)
+    {
+        bool el=v[i];
+        out.write((char*)&el, sizeof(bool));
+    }
+
+}
+
+void BoolColumn::printInWords(bool el) {
+    if(el==1)
+    {
+        std::cout<<"TRUE"<<" ";
+    }
+    else
+    {
+        std::cout<<"FALSE"<<" ";
+    }
 }

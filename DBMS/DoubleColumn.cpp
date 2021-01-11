@@ -162,3 +162,16 @@ bool DoubleColumn::findValue(double value) {
     }
     return false;
 }
+
+void DoubleColumn::saveColumn(std::ostream &out) {
+    int type=getType();
+    out.write((char *)(&type), sizeof(int));
+    size_t sizeName=name.size();
+    out.write((char*)&sizeName, sizeof(size_t));
+    out.write(name.c_str(),sizeName);
+    out.write((char*)&primaryKey, sizeof(bool));
+    for(size_t i=0; i<v.size();i++)
+    {
+        out.write((char*)&v[i], sizeof(double));
+    }
+}

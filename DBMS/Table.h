@@ -11,6 +11,7 @@
 #include "BoolColumn.h"
 #include "StringColumn.h"
 #include <functional>
+#include <fstream>
 
 
 class Table {
@@ -33,11 +34,17 @@ public:
     //here the added column must be allocated dynamically on heap;
     void addColumn(Column *c);
     void printName();
+
     void setName(const std::string& nameVal);
     void printTable();
     void printColumn(int number);
     void updateColumn( );
     void insertRow();
+    void printRow(int row);
+    void select(); //this is select* which chooses all columns in the table and prints them "SELECT * FROM students
+
+
+    void saveToFile(const std::string& filename);
 
     std::string& getName();
 

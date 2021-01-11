@@ -50,14 +50,12 @@ void Table::addColumn(const std::string &colName, int type, bool hasPrimaryKey) 
 
 void Table::printTable() {
 
-    for(size_t i=0; i<table.size();i++)
+
+    for(size_t i=0; i<table[0]->getSize();i++)
     {
 
-            for(size_t j=0; j<table[i]->getSize();j++)
-            {
-                table[i]->printValue(j);
-            }
-    std::cout<<std::endl;
+           printRow(i);
+           std::cout<<std::endl;
 
     }
 }
@@ -109,6 +107,23 @@ void Table::insertRow() {
 
     }
 }
+void Table::printRow(int row) {
+
+    if(row>=table[0]->getSize())
+    {
+        std::cout<<"INVALID ROW NUMBER"<<std::endl;
+        return;
+    }
+    for(size_t i=0; i<table.size();i++)
+    {
+
+        table[i]->printValue(row);
+
+
+    }
+
+
+}
 
 void Table::copy(const Table &other) {
     name=other.name;
@@ -142,5 +157,35 @@ Table &Table::operator=(const Table &other) {
     }
     return *this;
 }
+
+void Table::saveToFile(const std::string &filename) {  //todo:think whether or not should i check for nullptr
+    std::ofstream outFile(filename,std::ios::binary);  //opening file for writing
+    if(outFile.is_open())
+    {
+        size_t nameSize=name.length();
+        outFile.write((char*)&nameSize, sizeof(size_t));
+        outFile.write(name.c_str(),nameSize);
+        for(size_t i=0; i<table.size();i++)
+        {
+            table[i]->saveColumn(outFile);
+        }
+        outFile.close();
+    }
+    else
+    {
+        std::cerr<<"File cannot be opened";
+        return;
+    }
+}
+
+void Table::updateColumn() {
+
+}
+
+void Table::select() {
+    printTable();
+}
+
+
 
 

@@ -13,6 +13,7 @@ private:
         std::string name;
         bool primaryKey;
 public:
+    DoubleColumn(){};
     DoubleColumn(const std::string& nameVal, const std::vector<double>& vec, bool primKey):name(nameVal),v(vec),primaryKey(primKey){};
 
     virtual int getType();
@@ -30,6 +31,8 @@ public:
     virtual std::string minValue();
     virtual std::string sum();
     virtual std::string average();
+
+    virtual void saveColumn(std::ostream& out);
     bool findValue(double value);
 
 };

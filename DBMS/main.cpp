@@ -4,7 +4,7 @@
 #include "IntColumn.h"
 #include "Table.h"
 #include "DoubleColumn.h"
-
+#include "DatabaseSystem.h"
 void table()
 {
     std::vector<std::vector<int>> table;
@@ -74,26 +74,139 @@ void ex()
 //    t.addColumnWithElements(ptr);
 //    t.printTable();
 }
+bool validateString(std::string& str)
+{
+    for(int i=0; i<str.length();i++)
+    {
+        if(!((str[i]>='a' && str[i]<='z') ||(str[i]>='A' && str[i]<='Z') || str[i]=='_'))
+        {
+            return false;
+        }
 
 
+    }
+    return true;
+}
+void help()
+{
+    std::cout<<"The following commands are supported:"<<std::endl;
+    std::cout<<"CREATE TABLE                       creates table"<<std::endl;
+    std::cout<<"SAVE TABLE                         saves table"<<std::endl;
+    std::cout<<"INSERT INTO                        inserts row"<<std::endl;
+    std::cout<<"SELECT * FROM                        prints table"<<std::endl;
+    std::cout<<"AVERAGE                             find average"<<std::endl;
+}
 
+void test() {
+    Table t;
+    std::cout << "Welcome to Database Management System! To see a list of all commands type HELP: " << std::endl;
+    std::cout << "> ";
+    std::string str;
+    getline(std::cin, str);
+    while (str != "QUIT") {
+        if(str=="HELP")
+        {
+                help();
+        }
+        else if(str=="CREATE TABLE") {
+            std::cout << "Enter table name" << std::endl;
+            std::getline(std::cin, str);
+            if(!validateString(str))
+            {   std::cout<<"INVALID NAME FOR TABLE!"<<std::endl;
+                return;
+            }
+            t=(str);
+            std::cout << "Enter number of columns in the table: ";
+            int n;
+            std::cin >> n;
+            std::cin.ignore();
+            for (int i = 0; i < n; i++) {
+                std::cout << "Enter name of column:";
+                std::string colname;
+                if(!validateString(colname))
+                {   std::cout<<"INVALID NAME FOR COLUMN!"<<std::endl;
+                    return;
+                }
+                std::getline(std::cin, str);
+                std::cout << "Enter type of column:";
+                std::string type;
+                std::getline(std::cin, type);
+                if (type == "string") {
+                    Column *c = new StringColumn(colname, {""}, false);
+                    t.addColumn(c);
+                } else if (type == "int") {
+                    Column *c = new IntColumn(colname, {0}, false);
+                    t.addColumn(c);
+                } else if (type == "double") {
+
+                    Column *c = new DoubleColumn(colname, {0}, false);
+                    t.addColumn(c);
+                } else if (type == "bool") {
+
+                    std::vector<bool> v;
+                    Column *c = new BoolColumn(colname, v, false);
+                    t.addColumn(c);
+
+                } else {
+                    std::cout << "This type is not valid!" << std::endl;
+                    return;
+                }
+            }
+            std::cout<<"Table "<<t.getName()<<" created."<<std::endl;
+        }
+        else if(str=="INSERT INTO")
+        {
+            t.insertRow();
+        }
+        else if(str=="SELECT * FROM")  //todo vij zashto printira 0
+        {
+            t.select();
+        }
+        else if(str=="SAVE TABLE")
+        {
+                std::cout<<"Enter a filename to save the table: "<<std::endl;
+                std::string filename;
+                std::getline(std::cin,filename);
+                t.saveToFile(filename);
+                std::cout<<"SUCCESSFULLY SAVED TO FILE!"<<std::endl;
+
+        }
+        else
+        {
+            std::cout<<"You have entered a wrong command! Try again!"<<std::endl;
+        }
+
+
+        std::cout<<"Choose a new command to execute:"<<std::endl;
+        std::cout<<"> ";
+        std::getline(std::cin,str);
+    }
+    std::cout<<"Exiting. Good bye!"<<std::endl;
+
+
+}
 int main() {
 
-    Table t("students");
-    Column* ptr = new IntColumn ("people", {1,2,3}, true);
- //   Column * ptr2=new BoolColumn ("marks4",{1,0,1},0);
-  //  DoubleColumn c("marks4",{7.9,8,9});
-     ptr->addValue("4");
-     ptr->printValue(3);
-   // std::cout<<ptr2->average();
-
-
-//    t.addColumn(ptr);
-//    t.addColumn(ptr2);
-//    t.insertRow();
+//  Table t("students");
+//   Column* ptr = new IntColumn ("people", {1,2,3}, true);
+//  Column * ptr2=new BoolColumn ("marks4",{1,0,1}, false);
+//  //  DoubleColumn c("marks4",{7.9,8,9});
+//   //  ptr->addValue("4");
+// //    ptr->printValue(3);
+//   // std::cout<<ptr2->average();
 //
-//
-//    t.printTable();
+////
+//  t.addColumn(ptr);
+//  t.addColumn(ptr2);
+//////    t.insertRow();
+//////
+//////
+//    DatabaseSystem db;
+//    db.createTable("stood");
+//    db.insertRow("stood");
+////    t.saveToFile("table.bin");
+
+    test();
 
 
 

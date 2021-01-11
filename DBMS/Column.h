@@ -29,6 +29,10 @@ public:
     virtual std::string minValue()=0; //finds min value of a column
     virtual std::string average()=0; //find average of all values in a column
     virtual std::string sum()=0; //finds sum of all all elements in a column
+
+    virtual void saveColumn(std::ostream& out)=0;
+
+
     virtual ~Column(){};
 
 };

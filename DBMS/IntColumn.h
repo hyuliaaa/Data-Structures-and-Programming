@@ -34,6 +34,8 @@ public:
     void printVectorValues();
     bool findValue(int val);
 
+    virtual void saveColumn(std::ostream& out);
+
 
 };
 

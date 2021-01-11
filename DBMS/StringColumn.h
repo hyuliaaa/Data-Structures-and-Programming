@@ -13,6 +13,7 @@ private:
     std::string name;
     bool primaryKey;
 public:
+    StringColumn(){};
     StringColumn(const std::string& nameVal,const  std::vector<std::string>& vec, bool primKey):name(nameVal),v(vec),primaryKey(primKey){};
 
     virtual int getType();
@@ -33,6 +34,7 @@ public:
     virtual std::string average();
     bool findValue(const std::string& str);
 
+    virtual void saveColumn(std::ostream& out);
 
 };
 
