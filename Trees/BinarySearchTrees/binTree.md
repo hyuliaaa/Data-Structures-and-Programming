@@ -52,6 +52,7 @@ Node *search(Node *t, int key)
 }   
  ```           
 ## Inserting
+- first check whether the value we are inserting is already present, if present do not to anything
 - time: O(log n)
 ```c++
 void insert (Node *t, int key)
