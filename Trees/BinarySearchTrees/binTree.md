@@ -59,30 +59,26 @@ void insert (Node *t, int key)
 {
       Node *r=nullptr;
       Node *p;
-      while(t!=nullptr
-      {
+      while(t!=nullptr){
           r=t;
-          if(key==t->data)
-          {
+          if(key==t->data) {
               return;
           }
-          else if (key < t->data)
-          {
+          else if (key < t->data){
               t=t->left;
           }
-          else
+          else {
              t=t->right;
+          }
        }   
         
         t=new Node;
         t->data=key;
         t->left=t->right=nullptr;
-        if (t->data < r->data)
-        {
+        if (t->data < r->data) {
             r->left=t;
         }
-        else
-        {
+        else  {
             r->right=t;
         }
 }
